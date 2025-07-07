@@ -1,0 +1,75 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             targetNamespace="http://example.com/news">
+  <message name="LoginRequest">
+    <part name="username" type="xs:string"/>
+    <part name="password" type="xs:string"/>
+  </message>
+  <message name="LoginResponse">
+    <part name="response" type="xs:string"/> <!-- À convertir en JSON ou XML dans le backend -->
+  </message>
+  <message name="ListUsersRequest">
+    <part name="token" type="xs:string"/>
+  </message>
+  <message name="ListUsersResponse">
+    <part name="response" type="xs:string"/> <!-- À convertir en JSON ou XML -->
+  </message>
+  <message name="CreateUserRequest">
+    <part name="token" type="xs:string"/>
+    <part name="userData" type="xs:string"/> <!-- À convertir en JSON ou XML -->
+  </message>
+  <message name="CreateUserResponse">
+    <part name="response" type="xs:string"/> <!-- À convertir en JSON ou XML -->
+  </message>
+  <message name="UpdateUserRequest">
+    <part name="token" type="xs:string"/>
+    <part name="userId" type="xs:int"/>
+    <part name="userData" type="xs:string"/> <!-- À convertir en JSON ou XML -->
+  </message>
+  <message name="UpdateUserResponse">
+    <part name="response" type="xs:string"/> <!-- À convertir en JSON ou XML -->
+  </message>
+  <message name="DeleteUserRequest">
+    <part name="token" type="xs:string"/>
+    <part name="userId" type="xs:int"/>
+  </message>
+  <message name="DeleteUserResponse">
+    <part name="response" type="xs:string"/> <!-- À convertir en JSON ou XML -->
+  </message>
+  <portType name="NewsServicePortType">
+    <operation name="login">
+      <input message="tns:LoginRequest"/>
+      <output message="tns:LoginResponse"/>
+    </operation>
+    <operation name="listUsers">
+      <input message="tns:ListUsersRequest"/>
+      <output message="tns:ListUsersResponse"/>
+    </operation>
+    <operation name="createUser">
+      <input message="tns:CreateUserRequest"/>
+      <output message="tns:CreateUserResponse"/>
+    </operation>
+    <operation name="updateUser">
+      <input message="tns:UpdateUserRequest"/>
+      <output message="tns:UpdateUserResponse"/>
+    </operation>
+    <operation name="deleteUser">
+      <input message="tns:DeleteUserRequest"/>
+      <output message="tns:DeleteUserResponse"/>
+    </operation>
+  </portType>
+  <binding name="NewsServiceBinding" type="tns:NewsServicePortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="login">
+      <soap:operation soapAction="http://example.com/news/login"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+    <!-- Répéter pour listUsers, createUser, updateUser, deleteUser -->
+  </binding>
+  <service name="NewsService">
+    <port name="NewsServicePort" binding="tns:NewsServiceBinding">
+      <soap:address location="http://localhost:3000/soap"/>
+    </port>
+  </service>
+</definitions>
