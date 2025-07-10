@@ -1,17 +1,20 @@
-import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import ArticleDetail from './components/ArticleDetail';
+import Navbar from './components/Navbar';
+import CategoryList from './components/CategoryList';
 
-const App: React.FC = () => {
+function App() {
   return (
-    <BrowserRouter>
+    <Router>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/article/:id" element={<ArticleDetail />} />
+        <Route path="/category/:name" element={<CategoryList />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
-};
+}
 
 export default App;
